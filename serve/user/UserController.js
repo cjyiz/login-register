@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-// var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost:27017/cjyiz',{ useNewUrlParser: true });
-// router.use(bodyParser.urlencoded({ extended: true }));
-// router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 var UserSchema = new mongoose.Schema({
     username: String,
@@ -26,13 +26,13 @@ router.get('/register', (req, res) => {
 // 用户注册，向数据库中添加用户数据
 router.post('/register', function (req, res) {
     // 按道理使用了body-parser后，响应应该是req.body.name?但是为什么不对呢？？
-    console.log(req.query.name)
+    console.log(req.body.username)
     const newUser = new Users({
-        username : req.query.name,
-        password : req.query.password,
-        status: req.query.status
+        username : req.body.username,
+        password : req.body.password,
+        // status: req.body.status
     });
-    const username = req.query.username;
+    const username = req.body.username;
     Users.find({username: username},(err, docs) => {
         if(docs.length > 0) {
             res.send({isSuccess: false, message: '用户名已存在'})
@@ -47,11 +47,15 @@ router.post('/register', function (req, res) {
 
 // 用户登录,查询数据库，判断用户名和密码是否匹配
 router.post('/login', function (req, res) {
-    const username = req.query.name;
-    const password = req.query.password;
+    console.log(req.body.username)
+    const username = req.body.username;
+    console.log(username)
+    const password = req.body.password;
+    console.log(Users)
     Users.find({username: username}, function (err, users) {
+        console.log('用户')
         console.log(users);
-        if(users.length === 0) {
+        if(users.length == 0) {
             res.send({isSuccess: false, message: '该用户不存在'});
         } else if (users[0].password === password) {
             res.send({isSuccess: true, message: '登录成功'});
@@ -63,9 +67,9 @@ router.post('/login', function (req, res) {
 
 // 修改密码
 router.post('/change', function (req, res) {
-    const username = req.query.name;
-    const OldPass = req.query.OldPass;
-    const NewPass = req.query.NewPass;
+    const username = req.body.name;
+    const OldPass = req.body.OldPass;
+    const NewPass = req.body.NewPass;
     Users.find({username: username}, function (err, user) {
         if(user.length === 0) {
             res.send({isSuccess: false, message: '该用户名不存在'});

@@ -6,7 +6,7 @@
        <input type="text" placeholder="请输入密码" v-model='password'>
        <button v-on:click='login'>登录</button>
        <!-- 这里不应该用路由？？ -->
-       <span >没有账号？马上注册</span>
+       <span @click='ToRegister' >没有账号？马上注册</span>
        <!-- <span v-on:click='ToRegister' >没有账号？马上注册</span> -->
     </div>
 </template>
@@ -34,25 +34,29 @@ export default {
     },
     methods:{
         login(){
-            if(this.username==""||this.paddword==""){
+            if(this.username==""||this.password==""){
                 alert("请输入用户名或密码")
             }else{
                 let data={"username":this.username,"password":this.password}
                 // 接口请求
                 this.$http.post('http://localhost:3000/user/login',data).then((res)=>{
-                    console.log(res)
+                    // console.log(res)
+                    // console.log(res.data)
                     // 接口传值是(-1，用户不存在)，(0,密码错误)，同时还会检测管理员账号的值
-                    if(res.data==-1){
+                    if(res.data.message==='该用户不存在'){
                         this.tishi="该用户不存在"
                         this.showTishi=true
-                    }else if(res.data==0){
+                    }else if(res.data.message==='密码不正确，请重新输入'){
                         this.tishi="密码输入错误"
                         this.showTishi=true
-                    }else if(res.data==="admin"){
-                        // 路由跳转this.$router.push
-                        this.$router.push('/main')
-                    }else{
-                        this.tishi="登录成功"
+                    }
+                    // 没写路由跳转
+                    // else if(res.data==="admin"){
+                    //     // 路由跳转this.$router.push
+                    //     this.$router.push('/main')
+                    // }
+                    else if(res.data.message==='登录成功'){
+                        this.tishi="我说你登录成功"
                         this.showTishi=true
                         setCookie('username',this.username,1000*60)
                         setTimeout(()=>{
@@ -62,6 +66,9 @@ export default {
                     }
                 })
             }
+        },
+        ToRegister(){
+            this.$router.push('./register')
         }
     }
 }

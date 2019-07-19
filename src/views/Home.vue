@@ -1,35 +1,40 @@
 <template>
   <div class="home">
-    <h3>欢迎{{name}}</h3>
-    <a href="#" @click='quit'>注销登录</a>
+    <h3>欢迎  {{name}}</h3>
+    <a href="#" @click="quit">注销登录</a>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import {setCookie,getCookie,delCookie } from '@/assets/js/cookie.js'
+import { getCookie, delCookie } from "@/assets/js/cookie.js";
 
 export default {
-  name: 'home',
-  data(){
+  name: "home",
+  data() {
     return {
-      name:''
-    }
+      name: ""
+    };
   },
-  mounted(){
+  mounted() {
     // 页面挂载获取保存的cookie值，渲染到页面上
-    let uname=getCookie('username')
+    let uname = getCookie("username");
     this.name=uname
     // 如果cookie不存在，则跳转到登录页
-    if(uname==''){
-      this.$router.push('/')
+    console.log(uname);
+    if (uname == "") {
+      this.$router.push("/login");
     }
   },
-  methods:{
-    quit(){
+  methods: {
+    quit() {
       // 删除cookie
-      delCookie('username')
+      delCookie("username");
+      setTimeout(() => {
+        this.$router.push("./login");
+        console.log(this);
+      }, 300);
     }
   }
-}
+};
 </script>
