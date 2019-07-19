@@ -14,6 +14,8 @@ var UserSchema = new mongoose.Schema({
 });
 const Users = mongoose.model('login', UserSchema);
 
+
+
 router.get('/register', (req, res) => {
     Users.find({"username": '张三'}, (err, docs) => {
         console.log(docs);
@@ -23,6 +25,7 @@ router.get('/register', (req, res) => {
 
 // 用户注册，向数据库中添加用户数据
 router.post('/register', function (req, res) {
+    
     console.log(req.query.name)
     const newUser = new Users({
         username : req.query.name,
@@ -44,8 +47,8 @@ router.post('/register', function (req, res) {
 
 // 用户登录,查询数据库，判断用户名和密码是否匹配
 router.post('/login', function (req, res) {
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.query.name;
+    const password = req.query.password;
     Users.find({username: username}, function (err, users) {
         console.log(users);
         if(users.length === 0) {
@@ -60,9 +63,9 @@ router.post('/login', function (req, res) {
 
 // 修改密码
 router.post('/change', function (req, res) {
-    const username = req.body.username;
-    const OldPass = req.body.OldPass;
-    const NewPass = req.body.NewPass;
+    const username = req.query.name;
+    const OldPass = req.query.OldPass;
+    const NewPass = req.query.NewPass;
     Users.find({username: username}, function (err, user) {
         if(user.length === 0) {
             res.send({isSuccess: false, message: '该用户名不存在'});
