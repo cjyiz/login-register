@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost:27017/cjyiz',{ useNewUrlParser: true });
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+// router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(bodyParser.json());
 
 var UserSchema = new mongoose.Schema({
     username: String,
@@ -25,7 +25,7 @@ router.get('/register', (req, res) => {
 
 // 用户注册，向数据库中添加用户数据
 router.post('/register', function (req, res) {
-    
+    // 按道理使用了body-parser后，响应应该是req.body.name?但是为什么不对呢？？
     console.log(req.query.name)
     const newUser = new Users({
         username : req.query.name,
