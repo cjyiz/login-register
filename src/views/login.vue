@@ -67,15 +67,15 @@ export default {
             this.showTishi = true
             setCookie('username', this.username, 1000 * 60)
             setTimeout(() => {
-              this.$router.push('./home')
-              console.log(this)
+              console.log('跳回主页')
+              this.$router.push('/home')
             }, 1000)
           }
         })
       }
     },
     ToRegister () {
-      this.$router.push('./register')
+      this.$router.push('/register')
     }
   }
 }

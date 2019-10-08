@@ -43,29 +43,29 @@ new Vue({
 // })
 
 //写法二
-router.beforeEach(async (to, from, next) => {
-  if (store.state.userToken) {
-    if (to.path == '/login') {
-      next({ path: '/' })
-    } else {
-      //通过登录后的用户角色，检查是否有权限
-      const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      if (hasRoles) {
-        next()
-      } else {
-        try {
-          const { roles } = await store.dispatch('user/getInfo')
-          const accessRoutes = await store.dispatch(
-            'permission/generateRoutes',
-            roles
-          )
-          router.addRoutes(accessRoutes)
-          next({ ...to, replace: true })
-        } catch (err) {
-          await store.dispatch('user/resetToken')
-          next('/login?redirect=${to.path}')
-        }
-      }
-    }
-  }
-})
+// router.beforeEach(async (to, from, next) => {
+//   if (store.state.userToken) {
+//     if (to.path == '/login') {
+//       next({ path: '/' })
+//     } else {
+//       //通过登录后的用户角色，检查是否有权限
+//       const hasRoles = store.getters.roles && store.getters.roles.length > 0
+//       if (hasRoles) {
+//         next()
+//       } else {
+//         try {
+//           const { roles } = await store.dispatch('user/getInfo')
+//           const accessRoutes = await store.dispatch(
+//             'permission/generateRoutes',
+//             roles
+//           )
+//           router.addRoutes(accessRoutes)
+//           next({ ...to, replace: true })
+//         } catch (err) {
+//           await store.dispatch('user/resetToken')
+//           next('/login?redirect=${to.path}')
+//         }
+//       }
+//     }
+//   }
+// })

@@ -13,6 +13,11 @@ const dynamicRoutes = [
     path: '/cjyiz3',
     component: () => import('../views/cjyiz1.vue'),
     name: 'cjyiz3'
+  },
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
   }
 ]
 
