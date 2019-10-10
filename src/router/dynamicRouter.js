@@ -2,7 +2,10 @@ const dynamicRoutes = [
   {
     path: '/cjyiz1',
     component: () => import('../views/cjyiz1.vue'),
-    name: 'cjyiz1'
+    name: 'cjyiz1',
+    meta: {
+      role: ['admin', 'user', 'visit']
+    }
   },
   {
     path: '/cjyiz2',

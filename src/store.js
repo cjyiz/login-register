@@ -10,14 +10,21 @@ export default new Vuex.Store({
   },
   getter: {},
   mutations: {
-    increment(state) {
-      state.isLogin = true
+    increment (state) {
       // console.log('执行没有') //在仗剑天涯行之前执行
+    },
+    login (state, token) {
+      state.isLogin = true
+      state.userToken = token
+
     }
   },
   actions: {
+    login (context, userInfo) {
+      context.commit('login', userInfo)
+    },
     //1.可以包含异步操作2.通过提交mutations改变状态3.通过dispatch分发
-    increment(context) {
+    increment (context) {
       context.commit('increment')
       // console.log('仗剑天涯行')
     }

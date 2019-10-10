@@ -1,16 +1,24 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router.js'
+import dynamicRouter from './router/dynamicRouter.js'
 import store from './store'
 import VueResource from 'vue-resource'
 Vue.config.productionTip = false
 Vue.use(VueResource)
 new Vue({
   router,
+  dynamicRouter,
   store,
   render: h => h(App)
 }).$mount('#app')
 
+console.log(dynamicRouter)
+// router.beforeEach((to, from, next) => {
+//   if (!store.state.userToken) {
+
+//   }
+// })
 //写法一
 // router.beforeEach((to, from, next) => {
 //   if (!store.state.userToken) {

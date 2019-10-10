@@ -61,13 +61,11 @@ export default {
           //     this.$router.push('/main')
           // }
           else if (res.data.message === '登录成功') {
-            // this.$store.commit('increment')
-            this.$store.dispatch('increment')
+            this.$store.dispatch('login', this.username)
             this.tishi = "我说你登录成功"
             this.showTishi = true
             setCookie('username', this.username, 1000 * 60)
             setTimeout(() => {
-              console.log('跳回主页')
               this.$router.push('/home')
             }, 1000)
           }
