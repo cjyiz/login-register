@@ -6,11 +6,29 @@ Vue.use(Router)
 export default new Router({
   base: process.env.BASE_URL,
   routes: [
+
     {
       path: '/home',
-      name: 'home',
+      // name: 'home',
       component: Home
     },
+    {
+      path: '/user/:id',
+      name: 'user',
+      component: () => import('../views/cjyiz.vue')
+      // 切记不能写成如下页面
+      // component: () =>{import('../views/cjyiz2.vue')} 
+    },
+    // {
+    //   path: '/cjyiz1',
+    //   name: 'user',
+    //   component: () => import('../views/cjyiz1.vue')
+    // },
+    // {
+    //   path: '/cjyiz2',
+    //   name: 'cjyiz2',
+    //   component: () => import('../views/cjyiz2.vue')
+    // },
     {
       path: '/about',
       name: 'about',

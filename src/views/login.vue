@@ -9,7 +9,8 @@
     <input type="text"
            placeholder="请输入密码"
            v-model='password'>
-    <button v-on:click='login'>登录</button>
+    <button v-on:click='login'
+            :loading='loading'>登录</button>
     <!-- 这里不应该用路由？？ -->
     <span @click='ToRegister'>没有账号？马上注册</span>
     <!-- <span v-on:click='ToRegister' >没有账号？马上注册</span> -->
@@ -28,7 +29,8 @@ export default {
       username: '',
       password: '',
       newUsername: '',
-      newPassword: ''
+      newPassword: '',
+      loading: false
     }
   },
   mounted () {
@@ -42,11 +44,14 @@ export default {
       if (this.username == "" || this.password == "") {
         alert("请输入用户名或密码")
       } else {
+        this.loading = true
         let data = { "username": this.username, "password": this.password }
         // 接口请求
         this.$http.post('http://localhost:3000/user/login', data).then((res) => {
           // console.log(res)
           // console.log(res.data)
+          this.loading = false
+
           // 接口传值是(-1，用户不存在)，(0,密码错误)，同时还会检测管理员账号的值
           if (res.data.message === '该用户不存在') {
             this.tishi = "该用户不存在"
@@ -55,19 +60,23 @@ export default {
             this.tishi = "密码输入错误"
             this.showTishi = true
           }
-          // 没写路由跳转
-          // else if(res.data==="admin"){
-          //     // 路由跳转this.$router.push
-          //     this.$router.push('/main')
-          // }
+
           else if (res.data.message === '登录成功') {
-            this.$store.dispatch('login', this.username)
+            const userInfo = {
+              name: this.username,
+              role: 'admin'
+            }
+            // this.$store.dispatch('login', userInfo) 这是一个promise对象
+            this.$store.dispatch('login', userInfo).then(() => {
+              this.$router.push('./home')
+            }).catch(err => console.log(err))
+
             this.tishi = "我说你登录成功"
             this.showTishi = true
-            setCookie('username', this.username, 1000 * 60)
-            setTimeout(() => {
-              this.$router.push('/home')
-            }, 1000)
+            // setCookie('username', this.username, 1000 * 60)
+            // setTimeout(() => {
+            //   this.$router.push('/home')
+            // }, 1000)
           }
         })
       }
