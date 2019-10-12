@@ -10,11 +10,13 @@ export default new Router({
     {
       path: '/home',
       // name: 'home',
-      component: Home
+      component: Home,
+      meta: { requiresAuth: true }
     },
     {
       path: '/user/:id',
       name: 'user',
+      meta: { requiresAuth: true },
       component: () => import('../views/cjyiz.vue')
       // 切记不能写成如下页面
       // component: () =>{import('../views/cjyiz2.vue')} 
@@ -50,6 +52,10 @@ export default new Router({
       path: '/404',
       name: '404',
       component: () => import('../views/404.vue')
+    }, {
+      //配置这里，结合路由守卫，才能搞定输入url第一次页面不过滤的问题
+      path: "*",
+      redirect: '/login'
     }
   ]
 })

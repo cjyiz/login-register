@@ -1,14 +1,48 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router.js'
-// import dynamicRouter from './router/dynamicRouter.js'
+import dynamicRouter from './router/dynamicRouter.js'
 import store from './store'
 import VueResource from 'vue-resource'
 Vue.config.productionTip = false
 Vue.use(VueResource)
+
+//在页面加载时读取sessionStorage里的状态信息
+if (sessionStorage.getItem("store")) {
+  store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem("store"))))
+}
+//在页面刷新时将vuex里的信息保存到sessionStorage里
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("store", JSON.stringify(store.state))
+})
+router.beforeEach((to, from, next) => {
+
+  // console.log(store.state.userToken)
+  console.log(to.matched.some(m => m.meta.requiresAuth))
+
+  if (to.matched.some(m => m.meta.requiresAuth)) {
+    console.log(store.state.userToken)
+    if (store.state.userToken) {
+      console.log('登录状态')
+      next()
+    } else {
+      if (to.path === '/login') {
+        console.log('登录')
+        next()
+      } else {
+        console.log('没有登陆')
+        next({ path: '/login' })
+      }
+    }
+  } else {
+    console.log('请先登录')
+    next()
+  }
+
+})
 new Vue({
   router,
-  // dynamicRouter,
+  dynamicRouter,
   store,
   render: h => h(App)
 }).$mount('#app')
@@ -48,6 +82,7 @@ new Vue({
 //     }
 //   }
 // })
+
 
 //写法二
 // router.beforeEach(async (to, from, next) => {

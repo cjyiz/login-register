@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { setCookie, getCookie } from '@/assets/js/cookie.js'
+// import { setCookie, getCookie } from '@/assets/js/cookie.js'
 export default {
   name: 'Login',
   data () {
@@ -35,9 +35,9 @@ export default {
   },
   mounted () {
     // 页面挂在获取cookie，如果存在username的cookie，则跳转到主页，不需要登录
-    if (getCookie('username')) {
-      this.$router.push('./home')
-    }
+    // if (getCookie('username')) {
+    //   this.$router.push('./home')
+    // }
   },
   methods: {
     login () {
