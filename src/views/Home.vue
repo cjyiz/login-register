@@ -4,9 +4,9 @@
     <a href="#"
        @click="quit">注销登录</a>
     <br />
-    <router-link to='/user/c1'>cjyiz1</router-link>|
-    <router-link to='/user/c2'>cjyiz2</router-link>|
-    <router-link to='/user/c3'>cjyiz3</router-link>|
+    <router-link to='/cjyiz1'>cjyiz1</router-link>|
+    <router-link to='/cjyiz2'>cjyiz2</router-link>|
+    <router-link to='/cjyiz3'>cjyiz3</router-link>|
   </div>
 </template>
 

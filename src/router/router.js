@@ -13,23 +13,13 @@ export default new Router({
       component: Home,
       meta: { requiresAuth: true }
     },
-    {
-      path: '/user/:id',
-      name: 'user',
-      meta: { requiresAuth: true },
-      component: () => import('../views/cjyiz.vue')
-      // 切记不能写成如下页面
-      // component: () =>{import('../views/cjyiz2.vue')} 
-    },
     // {
-    //   path: '/cjyiz1',
+    //   path: '/user/:id',
     //   name: 'user',
-    //   component: () => import('../views/cjyiz1.vue')
-    // },
-    // {
-    //   path: '/cjyiz2',
-    //   name: 'cjyiz2',
-    //   component: () => import('../views/cjyiz2.vue')
+    //   meta: { requiresAuth: true },
+    //   component: () => import('../views/cjyiz.vue')
+    //   // 切记不能写成如下页面
+    //   // component: () =>{import('../views/cjyiz2.vue')} 
     // },
     {
       path: '/about',

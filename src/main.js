@@ -6,7 +6,6 @@ import store from './store'
 import VueResource from 'vue-resource'
 Vue.config.productionTip = false
 Vue.use(VueResource)
-
 //在页面加载时读取sessionStorage里的状态信息
 if (sessionStorage.getItem("store")) {
   store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem("store"))))
@@ -16,14 +15,35 @@ window.addEventListener("beforeunload", () => {
   sessionStorage.setItem("store", JSON.stringify(store.state))
 })
 router.beforeEach((to, from, next) => {
+  console.log(router)
+  console.log(dynamicRouter)
+  let accessRoutes =
+    (() => {
+      for (let i = 0; i < dynamicRouter.length; i++)
 
+        if (dynamicRouter[i].meta.role === 'admin') {
+          return item
+        }
+    })
+  // const accessRoutes = dynamicRouter.map((item) => {
+  //   console.log(item.meta)
+
+  // })
+  console.log(accessRoutes)
+  router.addRoutes(accessRoutes)
   // console.log(store.state.userToken)
-  console.log(to.matched.some(m => m.meta.requiresAuth))
-
+  // console.log(to.matched.some(m => m.meta.requiresAuth))
+  const role = store.getters.userInfo.role
+  console.log(role)
   if (to.matched.some(m => m.meta.requiresAuth)) {
-    console.log(store.state.userToken)
     if (store.state.userToken) {
       console.log('登录状态')
+      if (role === 'admin') {
+        console.log('管理员的权限访问')
+
+        router.addRoutes(dynamicRouter)
+        console.log(router)
+      }
       next()
     } else {
       if (to.path === '/login') {
@@ -35,7 +55,6 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    console.log('请先登录')
     next()
   }
 
