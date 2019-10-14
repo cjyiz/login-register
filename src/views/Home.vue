@@ -4,11 +4,13 @@
     <a href="#"
        @click="quit">注销登录</a>
     <br />
+    <router-link to="/about">About</router-link> |
+    <router-link to="/login">Login</router-link> |
+    <router-link to='/register'>Register</router-link>
     <router-link to='/cjyiz1'
                  v-if='cjyiz1'>cjyiz1</router-link>
     <router-link to='/cjyiz2'
                  v-if='cjyiz2'>cjyiz1</router-link>
-
     <router-link to='/cjyiz3'
                  v-if='cjyiz3'>cjyiz1</router-link>
     <router-view></router-view>
