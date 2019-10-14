@@ -10,12 +10,20 @@ export default new Vuex.Store({
     userInfo: {
       name: '',
       role: ''
+    },
+    list: {
+      cjyiz1: false,
+      cjyiz2: false,
+      cjyiz3: false
     }
 
   },
   getters: {
     userInfo: state => {
       return state.userInfo
+    },
+    list: state => {
+      return state.list
     }
   },
   mutations: {
@@ -26,7 +34,17 @@ export default new Vuex.Store({
     SET_USER (state, userInfo) {
       state.userInfo.name = userInfo.name
       state.userInfo.role = userInfo.role
+    },
+    SET_LIST1 (state, cjyiz) {
+      state.list.cjyiz1 = cjyiz
+    },
+    SET_LIST2 (state, cjyiz) {
+      state.list.cjyiz2 = cjyiz
+    },
+    SET_LIST3 (state, cjyiz) {
+      state.list.cjyiz3 = cjyiz
     }
+
   },
   actions: {
     login ({ commit }, userInfo) {

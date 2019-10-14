@@ -14,34 +14,36 @@ if (sessionStorage.getItem("store")) {
 window.addEventListener("beforeunload", () => {
   sessionStorage.setItem("store", JSON.stringify(store.state))
 })
+
+// function hasPermission (roles, route) {
+//   console.log(route.meta)
+//   console.log(roles.some(role => route.meta.roles.includes(role)))
+//   if (route.meta && route.meta.role) {
+//     return roles.some(role => route.meta.roles.includes(role))
+//   } else {
+//     return true
+//   }
+// }
+function filterAsyncRoutes (routes, roles) {
+  const a = []
+  for (let i = 0; i < routes.length; i++) {
+    if (routes[i].meta.role.includes(roles)) {
+      a.unshift(routes[i])
+    }
+  }
+  return a
+}
 router.beforeEach((to, from, next) => {
-  console.log(router)
-  console.log(dynamicRouter)
-  let accessRoutes =
-    (() => {
-      for (let i = 0; i < dynamicRouter.length; i++)
 
-        if (dynamicRouter[i].meta.role === 'admin') {
-          return item
-        }
-    })
-  // const accessRoutes = dynamicRouter.map((item) => {
-  //   console.log(item.meta)
-
-  // })
-  console.log(accessRoutes)
-  router.addRoutes(accessRoutes)
-  // console.log(store.state.userToken)
-  // console.log(to.matched.some(m => m.meta.requiresAuth))
   const role = store.getters.userInfo.role
-  console.log(role)
   if (to.matched.some(m => m.meta.requiresAuth)) {
+    console.log(role)
     if (store.state.userToken) {
       console.log('登录状态')
-      if (role === 'admin') {
+      if (role) {
         console.log('管理员的权限访问')
-
-        router.addRoutes(dynamicRouter)
+        let accessRoutes = filterAsyncRoutes(dynamicRouter, role)
+        router.addRoutes(accessRoutes)
         console.log(router)
       }
       next()
@@ -57,7 +59,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-
 })
 new Vue({
   router,

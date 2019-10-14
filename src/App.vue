@@ -5,6 +5,9 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/login">Login</router-link> |
       <router-link to='/register'>Register</router-link>|
+      <!-- <router-link to='/cjyiz1'>cjyiz1</router-link>|
+      <router-link to='/cjyiz2'>cjyiz2</router-link>|
+      <router-link to='/cjyiz3'>cjyiz3</router-link>| -->
     </div>
     <transition name="slide"
                 mode="out-in">

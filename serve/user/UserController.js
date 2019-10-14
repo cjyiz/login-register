@@ -10,7 +10,7 @@ router.use(bodyParser.json())
 var UserSchema = new mongoose.Schema({
   username: String,
   password: String,
-  status: String
+  usertype: String
 })
 const Users = mongoose.model('login', UserSchema)
 
@@ -22,12 +22,13 @@ router.get('/register', (req, res) => {
 })
 
 // 用户注册，向数据库中添加用户数据
-router.post('/register', function(req, res) {
+router.post('/register', function (req, res) {
   // 按道理使用了body-parser后，响应应该是req.body.name?但是为什么不对呢？？
   console.log(req.body.username)
   const newUser = new Users({
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    usertype: req.body.usertype
     // status: req.body.status
   })
   const username = req.body.username
@@ -46,13 +47,13 @@ router.post('/register', function(req, res) {
 })
 
 // 用户登录,查询数据库，判断用户名和密码是否匹配
-router.post('/login', function(req, res) {
+router.post('/login', function (req, res) {
   // console.log(req.body.username)
   const username = req.body.username
   // console.log(username)
   const password = req.body.password
   // console.log(Users)
-  Users.find({ username: username }, function(err, users) {
+  Users.find({ username: username }, function (err, users) {
     // console.log('用户')
     // console.log(users);
     if (users.length == 0) {
@@ -66,11 +67,11 @@ router.post('/login', function(req, res) {
 })
 
 // 修改密码
-router.post('/change', function(req, res) {
+router.post('/change', function (req, res) {
   const username = req.body.name
   const OldPass = req.body.OldPass
   const NewPass = req.body.NewPass
-  Users.find({ username: username }, function(err, user) {
+  Users.find({ username: username }, function (err, user) {
     if (user.length === 0) {
       res.send({ isSuccess: false, message: '该用户名不存在' })
     } else {
@@ -91,8 +92,8 @@ router.post('/change', function(req, res) {
 })
 
 // DELETES A USER FROM THE DATABASE
-router.delete('/:id', function(req, res) {
-  Users.findByIdAndRemove(req.params.id, function(err, user) {
+router.delete('/:id', function (req, res) {
+  Users.findByIdAndRemove(req.params.id, function (err, user) {
     if (err)
       return res.status(500).send('There was a problem deleting the user.')
     res.status(200).send('User: ' + user.username + ' was deleted.')
@@ -100,8 +101,8 @@ router.delete('/:id', function(req, res) {
 })
 
 // UPDATES A SINGLE USER IN THE DATABASE
-router.put('/:id', function(req, res) {
-  Users.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(
+router.put('/:id', function (req, res) {
+  Users.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (
     err,
     user
   ) {

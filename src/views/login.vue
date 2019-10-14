@@ -64,7 +64,7 @@ export default {
           else if (res.data.message === '登录成功') {
             const userInfo = {
               name: this.username,
-              role: 'admin'
+              role: 'user'
             }
             // this.$store.dispatch('login', userInfo) 这是一个promise对象
             this.$store.dispatch('login', userInfo).then(() => {

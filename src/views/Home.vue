@@ -4,9 +4,14 @@
     <a href="#"
        @click="quit">注销登录</a>
     <br />
-    <router-link to='/cjyiz1'>cjyiz1</router-link>|
-    <router-link to='/cjyiz2'>cjyiz2</router-link>|
-    <router-link to='/cjyiz3'>cjyiz3</router-link>|
+    <router-link to='/cjyiz1'
+                 v-if='cjyiz1'>cjyiz1</router-link>
+    <router-link to='/cjyiz2'
+                 v-if='cjyiz2'>cjyiz1</router-link>
+
+    <router-link to='/cjyiz3'
+                 v-if='cjyiz3'>cjyiz1</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -19,8 +24,10 @@ export default {
   data () {
     return {
       user: '',
-      role: ''
-
+      role: '',
+      cjyiz1: false,
+      cjyiz2: false,
+      cjyiz3: false
     };
   },
   mounted () {
@@ -32,6 +39,9 @@ export default {
     // if (uname == "") {
     //   this.$router.push("/login");
     // }
+    this.cjyiz1 = this.$store.getters.list.cjyiz1
+    this.cjyiz2 = this.$store.getters.list.cjyiz2
+    this.cjyiz3 = this.$store.getters.list.cjyiz3
     this.user = this.$store.getters.userInfo.name
     this.role = this.$store.getters.userInfo.role
     console.log(this.user)
