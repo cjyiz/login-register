@@ -52,6 +52,7 @@ export default {
           // console.log(res.data)
           this.loading = false
 
+
           // 接口传值是(-1，用户不存在)，(0,密码错误)，同时还会检测管理员账号的值
           if (res.data.message === '该用户不存在') {
             this.tishi = "该用户不存在"
@@ -62,9 +63,10 @@ export default {
           }
 
           else if (res.data.message === '登录成功') {
+            console.log(res)
             const userInfo = {
               name: this.username,
-              role: 'user'
+              role: 'visit'
             }
             // this.$store.dispatch('login', userInfo) 这是一个promise对象
             this.$store.dispatch('login', userInfo).then(() => {

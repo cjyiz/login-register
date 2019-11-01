@@ -41,8 +41,10 @@ router.beforeEach((to, from, next) => {
     if (store.state.userToken) {
       console.log('登录状态')
       if (role) {
+        console.log(router)
         console.log('管理员的权限访问')
         let accessRoutes = filterAsyncRoutes(dynamicRouter, role)
+        console.log(accessRoutes)
         router.addRoutes(accessRoutes)
         console.log(router)
       }

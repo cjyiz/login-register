@@ -19,6 +19,7 @@ router.beforeEach(async (to, from, next) => {
         try {
           // 拉取用户信息
           const { roles } = await store.dispatch('user/getInfo')
+          console.log('这是用户名' + roles)
           const accessRoutes = await store.dispatch('permission/genetateRoutes', roles)
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true })

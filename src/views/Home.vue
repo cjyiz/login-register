@@ -10,9 +10,9 @@
     <router-link to='/cjyiz1'
                  v-if='cjyiz1'>cjyiz1</router-link>
     <router-link to='/cjyiz2'
-                 v-if='cjyiz2'>cjyiz1</router-link>
+                 v-if='cjyiz2'>cjyiz2</router-link>
     <router-link to='/cjyiz3'
-                 v-if='cjyiz3'>cjyiz1</router-link>
+                 v-if='cjyiz3'>cjyiz3</router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
   methods: {
     quit () {
       // 删除cookie
-      // delCookie("username");
+      // delCookie("username")
       this.$store.dispatch('logout').then(() => { this.$router.push("./login") })
     }
   }

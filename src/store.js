@@ -50,10 +50,21 @@ export default new Vuex.Store({
     login ({ commit }, userInfo) {
       commit('SET_TOKEN', userInfo)
       commit('SET_USER', userInfo)
+      if (userInfo.name === 'cjyiz1') {
+        commit('SET_LIST1', true)
+      } else if (userInfo.name === 'cjyiz2') {
+        commit('SET_LIST2', true)
+      } else if (userInfo.name === 'cjyiz3') {
+        commit('SET_LIST3', true)
+      }
+
     },
     logout ({ commit }) {
       commit('SET_TOKEN', '')
       commit('SET_USER', '')
+      commit('SET_LIST1', false)
+      commit('SET_LIST2', false)
+      commit('SET_LIST3', false)
       // removeToken()
     },
     //1.可以包含异步操作2.通过提交mutations改变状态3.通过dispatch分发
