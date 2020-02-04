@@ -28,13 +28,17 @@ export function filterAsyncRoutes (routes, roles) {
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  count:0
 }
 // 提交更改路由设置，动态添加路由
 const mutations = {
   SET_ROUTES: (state, route) => {
     state.addRoutes = route
     state.routes = routes.concat(route)
+  },
+  cjyiz:state=>{
+    state.count++
   }
 }
 

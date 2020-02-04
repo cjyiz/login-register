@@ -10,7 +10,8 @@ export default new Vuex.Store({
     userInfo: {
       name: '',
       role: ''
-    }
+    },
+    count:0
 
   },
   getters: {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     SET_TOKEN (state, userInfo) {
       state.userToken = userInfo.name
 
+    },
+    cjyiz:state=>{
+      state.count++
     },
     SET_USER (state, userInfo) {
       state.userInfo.name = userInfo.name
